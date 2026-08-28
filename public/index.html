@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>projectWatchdog</title><link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar"><div><p class="eyebrow">LOCAL MONITORING</p><h1>projectWatchdog</h1></div><button class="primary" id="newScenario">+ New scenario</button></header>
+    <section class="summary"><div><span>Active scenarios</span><strong id="activeCount">0</strong></div></section>
+    <section class="content"><div class="section-heading"><div><p class="eyebrow">CONTROL ROOM</p><h2>Scenarios</h2></div><button class="ghost" id="refresh">Refresh</button></div><div class="table-wrap"><table><thead><tr><th>Scenario</th><th>Check</th><th>Interval</th><th>Last run</th><th>Result</th><th>Response</th><th>Response time</th><th>Enabled</th><th></th></tr></thead><tbody id="scenarioRows"><tr><td colspan="9" class="empty">Loading scenarios...</td></tr></tbody></table></div></section>
+  </main>
+  <aside class="drawer" id="drawer" aria-hidden="true"><div class="drawer-head"><div><p class="eyebrow" id="drawerEyebrow">NEW MONITOR</p><h2 id="drawerTitle">Create scenario</h2></div><button class="icon-button" id="closeDrawer" aria-label="Close">×</button></div><form id="scenarioForm"><input type="hidden" id="scenarioId"><label>Name<input id="name" required placeholder="Portfolio"></label><label>URL<input id="url" type="url" required placeholder="https://example.com"></label><div class="two-col"><label>Method<select id="method"><option>GET</option></select></label><label>Check type<select id="checkType"><option value="STATUS_CODE">Status code</option><option value="RESPONSE_TIME">Response time</option><option value="BODY_CONTAINS">Body contains</option><option value="BODY_NOT_CONTAINS">Body not contains</option></select></label></div><label>Expected value<input id="expectedValue" required value="200"></label><div class="two-col"><label>Interval (sec)<input id="interval" type="number" min="1" value="60" required></label><label>Timeout (sec)<input id="timeout" type="number" min="1" value="10" required></label></div><label class="check-row"><input id="enabled" type="checkbox" checked> Enabled</label><p class="form-error" id="formError"></p><button class="primary wide" type="submit">Save scenario</button></form><section class="history" id="history" hidden><div class="section-heading"><h3>Recent results</h3></div><div id="historyRows"></div></section></aside><div class="backdrop" id="backdrop"></div>
+  <script src="/js/app.js"></script>
+</body></html>

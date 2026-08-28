@@ -1,0 +1,7 @@
+node_modules
+dist
+*.db
+*.db-journal
+logs/
+.env
+.env.local

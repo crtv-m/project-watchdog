@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Scenario {
+  id            String        @id @default(cuid())
+  name          String
+  url           String
+  method        String        @default("GET")
+  interval      Int           @default(60)
+  timeout       Int           @default(10)
+  enabled       Boolean       @default(true)
+  checkType     CheckType     @default(STATUS_CODE)
+  expectedValue String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  lastRunAt     DateTime?
+  nextRunAt     DateTime      @default(now())
+  runLockUntil  DateTime?
+  results       CheckResult[]
+
+  @@index([enabled, nextRunAt])
+}
+
+model CheckResult {
+  id           String       @id @default(cuid())
+  scenarioId   String
+  startedAt    DateTime     @default(now())
+  finishedAt   DateTime?
+  status       ResultStatus
+  httpStatus   Int?
+  responseTime Int?
+  error        String?
+  scenario     Scenario     @relation(fields: [scenarioId], references: [id], onDelete: Cascade)
+
+  @@index([scenarioId, startedAt])
+}
+
+enum CheckType {
+  STATUS_CODE
+  RESPONSE_TIME
+  BODY_CONTAINS
+  BODY_NOT_CONTAINS
+}
+
+enum ResultStatus {
+  SUCCESS
+  FAILED
+  TIMEOUT
+  ERROR
+}
